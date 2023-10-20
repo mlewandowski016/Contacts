@@ -20,9 +20,21 @@ namespace Contacts.Controllers
         }
 
         // GET: Categories
-        public List<Category> Index()
+        //public List<Category> Index()
+        //{
+        //    var ViewBag = _context.Category.ToList() != null ? //_context.Category.ToList() : null;
+        //    return ViewBag;
+        //}
+        public IActionResult Index()
         {
-            return _context.Category.ToList() != null ? _context.Category.ToList() : null;
+            var categories = _context.Category.ToList(); // Pobierz listę kategorii z bazy danych
+
+            if (categories != null)
+            {
+                ViewBag.Categories = categories; // Przypisz listę kategorii do ViewBag tylko, jeśli są dostępne
+            }
+
+            return View();
         }
     }
 }
