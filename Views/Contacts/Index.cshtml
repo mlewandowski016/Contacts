@@ -22,19 +22,10 @@
                 @Html.DisplayNameFor(model => model.email)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.password)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.category)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.subcategory)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.phone)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.birthdate)
             </th>
             <th></th>
         </tr>
@@ -52,19 +43,10 @@
                 @Html.DisplayFor(modelItem => item.email)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.password)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.category)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.subcategory)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.phone)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.birthdate)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.id">Edit</a> |
