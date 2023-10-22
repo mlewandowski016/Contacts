@@ -43,8 +43,8 @@ namespace Contacts.Data.Migrations
                     lastname = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     password = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    category = table.Column<int>(type: "int", nullable: false),
-                    subcategory = table.Column<int>(type: "int", nullable: true),
+                    category = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    subcategory = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     phone = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     birthdate = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },

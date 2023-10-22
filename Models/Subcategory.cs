@@ -6,7 +6,6 @@ namespace Subcategories.Models
     {
         public int id { get; set; }
         public string subcategory { get; set; }
-        public int categoryId { get; set; }
         public Subcategory()
         {
 

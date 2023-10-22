@@ -20,8 +20,9 @@ namespace Contacts.Models
         [MinLength(8)]
         public string password { get; set; }
         [Required]
-        public Category category { get; set; }
-        public Subcategory subcategory { get; set; }
+        public string category { get; set; }
+        [Required]
+        public string subcategory { get; set; }
         [Required]
         [Phone]
         public string phone { get; set; }

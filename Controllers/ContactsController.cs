@@ -8,19 +8,16 @@ using Microsoft.EntityFrameworkCore;
 using Contacts.Data;
 using Contacts.Models;
 using Microsoft.AspNetCore.Authorization;
-using Contacts.Service;
 
 namespace Contacts.Controllers
 {
     public class ContactsController : Controller
     {
         private readonly ApplicationDbContext _context;
-        private readonly ISubcategoryService _subcategoryService;
 
-        public ContactsController(ApplicationDbContext context, ISubcategoryService subcategoryService)
+        public ContactsController(ApplicationDbContext context)
         {
             _context = context;
-            _subcategoryService = subcategoryService;
         }
 
         // GET: Contacts
@@ -54,15 +51,11 @@ namespace Contacts.Controllers
         public IActionResult Create()
         {
             ViewBag.Categories = _context.Category.ToList();
-            ViewBag.AllSubcategories = _context.Subcategory.ToList();
-            ViewBag.BusinessSubcategories = _context.Subcategory.Where(x => x.categoryId == 1);
-            ViewBag.PrivateSubcategories = _context.Subcategory.Where(x => x.categoryId == 2);
+            ViewBag.Subcategories = _context.Subcategory.ToList();
             return View();
         }
 
         // POST: Contacts/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -106,8 +99,6 @@ namespace Contacts.Controllers
         }
 
         // POST: Contacts/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]

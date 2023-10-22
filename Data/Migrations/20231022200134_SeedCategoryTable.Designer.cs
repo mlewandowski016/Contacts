@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Contacts.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231022171516_AddCategoryForeignKey")]
-    partial class AddCategoryForeignKey
+    [Migration("20231022200134_SeedCategoryTable")]
+    partial class SeedCategoryTable
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -39,6 +39,23 @@ namespace Contacts.Data.Migrations
                     b.HasKey("id");
 
                     b.ToTable("Category");
+
+                    b.HasData(
+                        new
+                        {
+                            id = 1,
+                            category = "business"
+                        },
+                        new
+                        {
+                            id = 2,
+                            category = "private"
+                        },
+                        new
+                        {
+                            id = 3,
+                            category = "other"
+                        });
                 });
 
             modelBuilder.Entity("Contacts.Models.Contact", b =>
@@ -53,8 +70,9 @@ namespace Contacts.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("categoryid")
-                        .HasColumnType("int");
+                    b.Property<string>("category")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("email")
                         .IsRequired()
@@ -76,14 +94,11 @@ namespace Contacts.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("subcategoryid")
-                        .HasColumnType("int");
+                    b.Property<string>("subcategory")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("id");
-
-                    b.HasIndex("categoryid");
-
-                    b.HasIndex("subcategoryid");
 
                     b.ToTable("Contact");
                 });
@@ -305,25 +320,23 @@ namespace Contacts.Data.Migrations
                     b.HasKey("id");
 
                     b.ToTable("Subcategory");
-                });
 
-            modelBuilder.Entity("Contacts.Models.Contact", b =>
-                {
-                    b.HasOne("Categories.Models.Category", "category")
-                        .WithMany()
-                        .HasForeignKey("categoryid")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Subcategories.Models.Subcategory", "subcategory")
-                        .WithMany()
-                        .HasForeignKey("subcategoryid")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("category");
-
-                    b.Navigation("subcategory");
+                    b.HasData(
+                        new
+                        {
+                            id = 1,
+                            subcategory = "boss"
+                        },
+                        new
+                        {
+                            id = 2,
+                            subcategory = "coworker"
+                        },
+                        new
+                        {
+                            id = 3,
+                            subcategory = "client"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
