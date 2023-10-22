@@ -35,12 +35,22 @@
             </div>
             <div class="form-group">
                 <label asp-for="category" class="control-label"></label>
-                <input asp-for="category" class="form-control" />
+                <select asp-for="category" class="form-control">
+                @foreach (var item in ViewBag.Categories)
+                {
+                    <option value="@item.category">@item.category</option>
+                }
+                </select>
                 <span asp-validation-for="category" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="subcategory" class="control-label"></label>
-                <input asp-for="subcategory" class="form-control" />
+                <select asp-for="subcategory" class="form-control">
+                @foreach (var item in ViewBag.Subcategories)
+                {
+                    <option value="@item.subcategory">@item.subcategory</option>
+                }
+                </select>
                 <span asp-validation-for="subcategory" class="text-danger"></span>
             </div>
             <div class="form-group">

@@ -1,14 +1,17 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Contacts.Models;
+using Categories.Models;
+using Subcategories.Models;
 
 namespace Contacts.Data
 {
     public class ApplicationDbContext : IdentityDbContext
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+		public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
+			DataSeeder.Seed(this);
         }
         public DbSet<Contacts.Models.Contact>? Contact { get; set; }
         public DbSet<Categories.Models.Category>? Category { get; set; }

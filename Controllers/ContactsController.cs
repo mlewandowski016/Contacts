@@ -8,16 +8,19 @@ using Microsoft.EntityFrameworkCore;
 using Contacts.Data;
 using Contacts.Models;
 using Microsoft.AspNetCore.Authorization;
+using Contacts.Service;
 
 namespace Contacts.Controllers
 {
     public class ContactsController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly ISubcategoryService _subcategoryService;
 
-        public ContactsController(ApplicationDbContext context)
+        public ContactsController(ApplicationDbContext context, ISubcategoryService subcategoryService)
         {
             _context = context;
+            _subcategoryService = subcategoryService;
         }
 
         // GET: Contacts
@@ -50,6 +53,10 @@ namespace Contacts.Controllers
         [Authorize]
         public IActionResult Create()
         {
+            ViewBag.Categories = _context.Category.ToList();
+            ViewBag.AllSubcategories = _context.Subcategory.ToList();
+            ViewBag.BusinessSubcategories = _context.Subcategory.Where(x => x.categoryId == 1);
+            ViewBag.PrivateSubcategories = _context.Subcategory.Where(x => x.categoryId == 2);
             return View();
         }
 
@@ -61,12 +68,19 @@ namespace Contacts.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("id,name,lastname,email,password,category,subcategory,phone,birthdate")] Contact contact)
         {
-            if (ModelState.IsValid)
+            var isEmailUsed = _context.Contact.Where(x => x.email == contact.email).Count() > 0;
+            if (isEmailUsed)
             {
+                ModelState.AddModelError("email", "Email is already used.");
+            }
+            if (ModelState.IsValid)
+            { 
                 _context.Add(contact);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewBag.Categories = _context.Category.ToList();
+            ViewBag.Subcategories = _context.Subcategory.ToList();
             return View(contact);
         }
 
@@ -84,6 +98,10 @@ namespace Contacts.Controllers
             {
                 return NotFound();
             }
+
+            ViewBag.Categories = _context.Category.ToList();
+            ViewBag.Subcategories = _context.Subcategory.ToList();
+
             return View(contact);
         }
 
